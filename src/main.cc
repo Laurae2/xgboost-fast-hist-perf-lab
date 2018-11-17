@@ -65,6 +65,8 @@ int main(int argc, char** argv) {
 
   // Compute histograms
   tstart = dmlc::GetTime();
+#pragma ivdep
+#pragma omp parallel for num_threads(nthread) schedule(dynamic)
   for (int i = 0; i < num_instance_set; ++i) {
     hist_builder.BuildHist(gpair, instance_set[i], gmat, &histogram[i]);
   }
